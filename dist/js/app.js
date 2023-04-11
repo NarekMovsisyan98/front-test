@@ -1,8 +1,13 @@
-let add=document.querySelector(".burger")
-add.addEventListener("click",newburger)
-function newburger() {
-    add.classList.toggle('active')
+let burger=document.querySelector(".burger")
+let mask =document.querySelector(".header__mask")
+burger.addEventListener("click",toggleMenu)
+mask.addEventListener("click",toggleMenu)
+function toggleMenu() {
+
+    burger.classList.toggle('active')
     document.querySelector('.navbar').classList.toggle('open')
+    mask.classList.toggle('active')
+    document.body.classList.toggle('no-scroll')
 }
 
 const body = document.body

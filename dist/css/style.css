@@ -31,8 +31,6 @@ aside {
 
 html,
 body {
-  line-height: 1;
-  font-size: 14px;
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -89,18 +87,25 @@ h6 {
   font-weight: 400;
 }
 
-svg path {
-  stroke: inherit;
-  stroke-width: inherit;
-  fill: inherit;
-}
-
 * {
   font-family: "Roboto", sans-serif;
 }
 
-.open {
-  display: flex !important;
+i {
+  font-size: 0.688rem;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.header {
+  background-color: #ffffff;
+  transition: all 2s;
+  position: sticky;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
 .container {
@@ -109,20 +114,11 @@ svg path {
   padding: 0 30px;
 }
 
-.header__box {
-  background-color: #ffffff;
-  transition: all 0.4s;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-}
-
-.scroll-down .header__box {
+.scroll-down .header {
   transform: translate3d(0, -100%, 0);
 }
 
-.scroll-up .header__box {
+.scroll-up .header {
   transform: none;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
@@ -137,7 +133,7 @@ svg path {
 .navbar {
   display: flex;
   justify-content: center;
-  padding: 1.25rem 0;
+  padding-top: 1.25rem;
   list-style: none;
   border-top: 1px solid #E9E9E9;
   border-bottom: 1px solid #E9E9E9;
@@ -146,12 +142,11 @@ svg path {
 .logo__search {
   margin-left: 1.25rem;
   position: absolute;
-  right: 15%;
+  right: 0;
 }
 
 .navbar__box {
   display: flex;
-  justify-content: space-around;
 }
 .navbar__box li {
   font-weight: 500;
@@ -159,35 +154,42 @@ svg path {
   font-size: 1rem;
   line-height: 1rem;
   position: relative;
+  padding-bottom: 1.25rem;
 }
 .navbar__box a {
   text-decoration: none;
   color: #000;
 }
-.navbar__box :hover .dropdown__menu {
-  display: block;
-  position: absolute;
-  left: -10px;
-  top: 30px;
+.navbar__box li:hover > ul {
+  display: initial;
+  left: 0;
+  top: 35px;
   background: #fff;
 }
 
 .dropdown__menu {
-  display: none;
-}
-.dropdown__menu ul {
-  display: block;
-  padding: 1.25rem;
+  position: absolute;
+  width: 11rem;
   border: 1px solid #E9E9E9;
+  display: none;
+  padding: 0.625rem 0;
+  padding-right: 1.25rem;
 }
 .dropdown__menu li {
-  width: 11rem;
-  padding: 1rem;
+  width: 100%;
+  padding: 0.5rem;
   list-style: none;
   border-bottom: 1px solid #E9E9E9;
   font-weight: 400;
   font-size: 0.813rem;
   line-height: 0.813rem;
+}
+.dropdown__menu li:last-child {
+  border-bottom: 0;
+}
+.dropdown__menu a:hover {
+  color: #969696;
+  margin-left: 0.625rem;
 }
 .dropdown__menu i {
   float: right;
@@ -237,24 +239,28 @@ svg path {
 }
 
 .news {
-  margin: 10rem 0;
+  margin: 3rem 0;
 }
 
 .news__box {
   display: flex;
   flex-wrap: wrap;
-  margin: -1.25rem;
+  margin: 0 -1.25rem;
 }
 
 .news__block {
   flex: 0 0 33.33%;
   max-width: 33.33%;
-  padding: 1.25rem;
+  padding: 0 1.25rem;
+  margin-bottom: 3rem;
 }
 
 .news__type {
   margin: 1rem 0;
   color: #EB0028;
+  font-size: 0.813rem;
+  font-weight: 700;
+  line-height: 0.813rem;
 }
 
 .news__title {
@@ -275,12 +281,15 @@ svg path {
   line-height: 0.75rem;
   font-weight: 500;
 }
+.news__today :nth-child(2) {
+  margin: 0 0.875rem;
+}
 .news__today span {
   font-size: 0.75rem;
   line-height: 0.75rem;
   font-weight: 400;
   color: #9B9B9B;
-  margin: 0 0.813rem;
+  display: list-item;
 }
 
 .news__text {
@@ -294,6 +303,25 @@ svg path {
   width: 100%;
 }
 
+.header__mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+header.header {
+  z-index: 100;
+}
+
+.header__mask.active {
+  display: block;
+}
+
 @media (max-width: 1023px) {
   .news__block {
     flex: 0 0 50%;
@@ -303,9 +331,6 @@ svg path {
     display: flex;
     position: absolute;
     left: 0;
-  }
-  .burger span {
-    display: none;
   }
   .header__box {
     position: sticky;
@@ -317,12 +342,11 @@ svg path {
     margin: 3rem 0;
   }
   .navbar__box li {
-    font-size: 2rem;
-    width: 100%;
-    line-height: 4rem;
+    width: 95%;
   }
   .navbar {
-    display: none;
+    transform: translateX(-150%);
+    transition: all 0.4s linear;
     flex-direction: column;
     position: fixed;
     justify-content: normal;
@@ -335,21 +359,16 @@ svg path {
     overflow-y: auto;
     padding: 7px;
     background-color: #fff;
-    animation: burgerAnimation 0.4s;
+  }
+  .navbar.open {
+    transform: translateX(0);
   }
   .navbar__box {
     flex-direction: column;
   }
-  @keyframes burgerAnimation {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  .navbar__box :hover .dropdown__menu {
-    left: 30%;
+  .navbar__box li {
+    border-bottom: 1px solid #E9E9E9;
+    padding: 10px 0;
   }
   .logo__search {
     right: 0;
@@ -365,14 +384,6 @@ svg path {
   .news__block {
     flex: 0;
     max-width: 100%;
-  }
-  .navbar__box li {
-    border-bottom: 1px solid #9B9B9B;
-    padding: 10px 0;
-  }
-  .navbar__box :hover .dropdown__menu li {
-    left: 40%;
-    font-size: 1.25rem;
   }
   .container {
     padding: 0 10px;
