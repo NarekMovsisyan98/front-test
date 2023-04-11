@@ -1,0 +1,22 @@
+{
+  "name": "narek",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp build"
+  },
+  "author": "Narek",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^5.1.0",
+    "prettier": "^2.8.0",
+    "sass": "^1.48.0",
+    "browser-sync": "^2.27.11",
+    "del": "^7.0.0"
+  }
+}
